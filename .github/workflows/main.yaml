@@ -22,10 +22,14 @@ jobs:
       matrix:
         image:
           - ubuntu-2204-lts
-        gap-branch:
-          - master
-          - stable-4.13
-          - stable-4.12
+        gap-version:
+          - 4.13.1
+          - 4.13.0
+          - 4.13.0-alpha2
+          - 4.13.0-alpha1
+          - 4.12.2
+          - 4.12.1
+          - 4.12.0
         platform:
           - linux/amd64
           - linux/arm/v7
@@ -73,3 +77,4 @@ jobs:
           cache-to: type=gha,mode=max`
           build-args: |
             PLATFORM=${{ matrix.platform }}
+            GAP_VERSION=${{ matrix.gap-version }}
