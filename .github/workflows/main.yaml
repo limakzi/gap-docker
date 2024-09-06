@@ -65,7 +65,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: 🐬 docker -- build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./src/dockerfiles/${{ matrix.image }}
           file: ./src/dockerfiles/${{ matrix.image }}/Dockerfile
