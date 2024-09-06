@@ -3,9 +3,15 @@ name: build docker image
 
 on:
   pull_request: 
+    paths:
+      - '.github/**'
+      - 'src/dockerfiles/**'
     branches: 
       - main
   push:
+    paths:
+      - '.github/**'
+      - 'src/dockerfiles/**'
     branches: 
       - main
 
