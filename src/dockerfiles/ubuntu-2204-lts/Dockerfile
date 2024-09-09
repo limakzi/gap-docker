@@ -1,6 +1,7 @@
 ARG PLATFORM="linux/arm64"
 
 ## {{{
+ARG GAP_BUILD="slim"
 ARG GAP_VERSION="4.13.1"
 ## }}}
 
@@ -38,6 +39,7 @@ RUN groupadd --system --gid ${GAP_USER_GID} ${GAP_USER_GROUPNAME} && \
 
 
 FROM base AS build
+ARG GAP_BUILD
 ARG GAP_VERSION
 ARG GAP_DOWNLOAD_URL
 ARG GAP_DOWNLOAD_TARBALL_NAME
@@ -72,6 +74,8 @@ RUN tar -xzf ${GAP_DOWNLOAD_TARBALL_NAME}
 WORKDIR "./gap-${GAP_VERSION}"
 RUN ./configure && \
     MAKEFLAGS=-j8 make
+
+RUN [[ ${GAP_BUILD} == "full" ]] && cd ./pkg/ && ../bin/BuildPackages.sh
 
 FROM base AS result
 ARG GAP_VERSION
