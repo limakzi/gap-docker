@@ -75,7 +75,7 @@ WORKDIR "./gap-${GAP_VERSION}"
 RUN ./configure && \
     MAKEFLAGS=-j8 make
 
-RUN [[ ${GAP_BUILD} == "full" ]] && cd ./pkg/ && ../bin/BuildPackages.sh
+RUN [[ ${GAP_BUILD} == "slim" ]] || cd ./pkg/ && ../bin/BuildPackages.sh
 
 FROM base AS result
 ARG GAP_VERSION

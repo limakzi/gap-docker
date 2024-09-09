@@ -26,7 +26,7 @@ jobs:
       attestations: write
       id-token: write
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         image:
           - ubuntu-2204-lts
