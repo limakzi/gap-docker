@@ -22,7 +22,7 @@ ARG GAP_DOWNLOAD_URL="https://github.com/gap-system/gap/releases/download/v${GAP
 
 
 
-FROM --platform=${PLATFORM} ubuntu:22.04 AS base
+FROM --platform=${PLATFORM} ubuntu:24.04 AS base
 ARG GAP_USER_GID
 ARG GAP_USER_GROUPNAME
 ARG GAP_USER_UID
