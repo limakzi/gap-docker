@@ -29,7 +29,7 @@ jobs:
       fail-fast: true
       matrix:
         image:
-          - ubuntu-2204-lts
+          - ubuntu2204
         gap-build:
           - full
           - slim
@@ -50,17 +50,22 @@ jobs:
       - name: 👨‍💻 git -- checkout
         uses: actions/checkout@v4
 
+      - name: 📋 docker -- prepare platform-key
+        run: |
+          platform=${{ matrix.platform }}
+          echo "PLATFORM_KEY=${platform//\//-}" >> $GITHUB_ENV
+
       - name: 🐬 docker -- metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
+          labels: |
+            org.opencontainers.image.authors=Kamil Zabielski
+            org.opencontainers.image.title=gap
           images: |
             name=ghcr.io/${{ github.repository }}
           tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=${{ matrix.gap-version }}-${{ matrix.image }}-${{ matrix.gap-build }}
 
       - name: 📦 docker -- login to ghcr-registry
         uses: docker/login-action@v3
@@ -84,6 +89,7 @@ jobs:
           push: ${{ ! github.event_name == 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          annotations: ${{ steps.meta.outputs.annotations }}
           cache-from: type=gha
           cache-to: type=gha,mode=max`
           build-args: |
